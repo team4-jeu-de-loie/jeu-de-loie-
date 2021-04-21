@@ -1,12 +1,14 @@
-#include"game.h"
-#include"player.h"
 #include<iostream>
+#include"game.h"
+#include"player.cpp"
 using namespace std ;
 //constrecteur de la classe game
 game::game(int n): nbplayers(n), max(6){   
         players = new player[max];
         cout<<"concrtecteur de jeu de loie"<<endl ;
 }
+//conctrecteur de recopie de la classe game 
+game::game
 //c'est pour ajouter les joueurs au tableau players
 void game::addplayer(player &a){
     if (nbplayers==max){

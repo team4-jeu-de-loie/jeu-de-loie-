@@ -8,6 +8,7 @@ class game
 {
     public:
     game(int n);
+    game(const game &g);
     void addplayer(player &a);
     void startgame();          
     void gameover();           
@@ -16,9 +17,8 @@ class game
     int tour();
     ~game();
     private:
-    int const max;       //le nombre maximale des joueurs c'est 6
+    int const max;   
     int nbplayers ;
-    player *players  ;    /*pointeur qui pointe sur les élements 
-                           de tableau qui sont des joueurs */
+    player *players  ;  
 };
 #endif

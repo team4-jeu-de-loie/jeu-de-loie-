@@ -8,4 +8,9 @@ int main(){
     joueur.saisiename();
     surface s ;
     s.plateau(5,7);
+    int n ;
+    cout<<"donner le nombre des joueurs"<<endl ;
+    cin>>n ;
+
+
 }

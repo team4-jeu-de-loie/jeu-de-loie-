@@ -8,8 +8,8 @@ class surface
     int const ncase = 63 ;      // nombre des cases
 
     public: 
-    surface();
-    void plateau(int i , int j) ;
+    surface();   //constructeur par défaut de la classe surface 
+    void plateau() ;    //saisir la longeur et le hauteur du plateau
     ~surface();     //destrecteur surface
 };
 #endif

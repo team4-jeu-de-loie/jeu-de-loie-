@@ -1,76 +1,106 @@
 #include<iostream>
 #include"game.h"
-#include"player.cpp"
+#include"string.h"
 using namespace std ;
 //constrecteur de la classe game
-game::game(int n): nbplayers(n), max(6){   
-        players = new player[max];
-        cout<<"concrtecteur de jeu de loie"<<endl ;
+game::game(int n=6):max(n),nbplayers(0),compteur(0){
+    players = new player[max];
+    cout<<"concrtecteur de jeu de loie"<<endl ;
 }
-//conctrecteur de recopie de la classe game 
-game::game
+//il faut que le nombre de joueur soit entre 2 et 6 joueurs
+void game::saisienbplayers(){
+    int n=0 ;
+    while ((n<2) || (n>6)){
+        cout<<"donner le nombre des joueur qui vont particper à cette jeu "<<endl ;
+        cin>>n ;
+        cout <<"il faut que le nombre des joueurs soit entre 2 et 6"<<endl ;
+    }
+    nbplayers=n;
+}
+int game::getnbplayers(){
+    return(nbplayers);
+}
 //c'est pour ajouter les joueurs au tableau players
 void game::addplayer(player &a){
-    if (nbplayers==max){
+    if (compteur==nbplayers){
         cout<<"le nombres des joueur maximale est atteint "<<endl ;
     }
     else {
-        players[nbplayers++]=a;
-        nbplayers=nbplayers+1 ;
+        players[compteur++]=a;
+        compteur=compteur+1 ;
     }
 }
-//commencer le jeu dés que le nombre des joueurs présents  est superieur à 1
-void game::startgame(){
-    if(nbplayers>1){
-        cout<<"le jeu commence"<<endl ;
-    }
-    else{
-        cout<<"il faut au moins deux joueurs pour commencer!! "<<endl ;
-    }
-}
-//la fin de jeu dés que l'un des joueurs arrive à la case 63 
-void game::gameover(){
-    int i=0 ;
-    while (players[i].getnumcase()!=63){
-        i++;
-        cout<<"le jeu n a pas encore terminé"<<endl ;
-    }
-    cout<<"le jeu est terminer"<<endl ;
-}
-//methode pour afficher le nom de gagnant 
-void game::sucess(){
-    for (int i=0;i<nbplayers;i++){
-        if (players[i].getnumcase()==63){
-            cout<<"le joueur "<<players[i].getname()<<"est le gagnant" ;
-            break;
+bool game::existname(player p){
+    bool test = false;
+    for (int i=0;i<compteur;i++){
+        if (p.getname()==players[i].getname()){
+        test=true ;
         }
     }
-    cout<<"pas de gagnant por le moment!!"; 
+    return(test);
 }
-void game::afficher_joueur(){
+bool game::existcolor(player p){
+    bool test=false ;
+    for (int i=0;i<compteur;i++){
+        if (p.getcolor()==players[i].getcolor()){
+        test=true ;
+        }
+    } 
+    return(test);                                   
+}
+//commencer le jeu 
+void game::startgame(){
+        cout<<"le jeu commence"<<endl ;
+}
+//methode pour afficher le nom de gagnant 
+bool game::sucess(){
+    bool test=false;
+    int i=0;
+    while ((players[i].getnumcase()!=63)&&(i<nbplayers+1)){
+        i++;
+    }
+    if (i==nbplayers+1){
+        test=false ;
+    }
+    else {
+        test=true;
+        cout<<"le joueur "<<players[i].getname()<<"de couleur"<<players[i].getcolor()<<"est le gagnant avec un score"<<players[i].getscore()<<endl  ;
+    }
+    return(test);
+}
+void game::afficher_joueurs(){
+    cout<<"les joueurs qui vont participer à ce jeu sont"<<endl;
     for (int i=0;i<nbplayers;i++){
-         players[i].afficher();
+        players[i].afficher();
     }
 }
-int game::tour(){
-    int tour=0;
-    
-    int i;
-       do{
-       i=0;                                          //s'arrete si un joueur arrive au case 63
-       players[i].lancement_de(players[i]);
-       for (i =1 ; i<nbplayers;i++){
-         players[i].lancement_de(players[i-1]);
-         
-       }
-       tour++;
-       }
-       while(players[i].getnumcase()!=63);
-    
-    return tour;
+void game::gameover() {
+    cout<<"le jeu est terminée"<<endl ;
 }
-//destruction de la classe game
+void game::tour(){
+    int i=0;
+    int tour=1 ;
+    while (sucess()==false){
+        cout<<"on commence le "<<tour<<"eme tour"<<endl;
+        for (int i=0; i<nbplayers;i++){
+            for(int j=0;j<nbplayers;j++){
+                if (i==j){
+                    j++;
+                }
+                players[i].lancement_de();
+                cout<<"c'est le tour de joueur"<<players[i].getname()<<endl;
+                cout<<"les deux dés ont comme valeurs :"<<endl;
+                cout<<"pour le premier dé"<<players[i].getnumde1()<<endl;
+                cout<<"pour le deuxieme dé"<<players[i].getnumde2()<<endl;
+                players[i].evenement(players[j]);
+                cout<<"le joueur"<<players[i].getname()<<"est dans la case :"<<players[i].getnumcase()<<endl;
+                cout<<"avec un score"<<players[i].getscore()<<endl;
+            }
+        }
+        tour++;
+    }  
+}
 game::~game(){
-        delete [] players ;
-        cout<<"destruction de la classe game";          
+    delete [] players ;
+    cout<<"destruction de la classe game";          
 }

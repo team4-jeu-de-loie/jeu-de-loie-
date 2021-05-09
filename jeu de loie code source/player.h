@@ -1,36 +1,36 @@
 #include<iostream>
 #include"string.h"
 using namespace std ;
-#ifndef PLAYER_H
-#define PLAYER _H
+#ifndef PLAYER
+#define PLAYER
 class player
 {
     private:
-    int score ;
-    string name ;
-    string color ;
-    int numde1 ;          
-    int numde2;
-    int numcase ;          
-    int anciennenumcase ;     
+    int score ;   //score de joueur
+    string name ;    //nom de joueur
+    string color ;    //coleur de pion de joueur 
+    int numde1 ;          //la valeur donnée par le premier dé  
+    int numde2;           //la valeur donnée par le deuxième dé
+    int numcase ;          //le numéro de case ou se trouve le joueur
+    int anciennenumcase ;     //sauvgarder la dernier position de joueur
     public:
-    player();
-    void operator=(const player &p){
-        score=p.score;
-        name=p.name ;
-        color=p.color ;
-        numde1=p.numde1 ;
-        numde2=p.numde2 ;
-        numcase=p.numcase;
-        anciennenumcase=p.anciennenumcase;
-    }
-    void claculescore(int);
+    player();             //constructeur de la classe player
+    void calculescore(int);      //calculer le score de joueur
     void saisiename();
     void saisiecolor () ;
-    void  lancement_de(player p) ;
+    bool verificolor();       
+    void  evenement(player p) ;
+    void lancement_de();
     void afficher()  ;
     string getname();
+    string getcolor();
     int getnumcase();
-    ~player();
+    int getscore();
+    int getanciennenumcase();
+    bool jocker();
+    void  operator = (const player & p) ;   
+    int getnumde1();
+    int getnumde2();   
+    ~player(){};
 };  
 #endif

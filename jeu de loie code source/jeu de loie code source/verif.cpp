@@ -1,16 +1,20 @@
 #include <iostream>
 #include"surface.cpp"
+#include"game.cpp"
 #include"player.cpp"
 int main(){
-    player joueur ;
-    joueur.claculescore(5);
-    joueur.saisiecolor();
-    joueur.saisiename();
-    surface s ;
-    s.plateau(5,7);
-    int n ;
-    cout<<"donner le nombre des joueurs"<<endl ;
-    cin>>n ;
-
-
+game g ;
+g.saisienbplayers();
+int n=g.getnbplayers();
+int i=0;
+while(i<n){
+    player p ;
+    p.saisiename();
+    p.saisiecolor();
+    g.addplayer(p);
+    i++;
+}
+//afficher les joueurs de ce tableau ;
+g.startgame();
+g.tour();
 }

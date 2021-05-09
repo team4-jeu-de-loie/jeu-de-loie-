@@ -4,17 +4,25 @@
 #include<ctime>
 #include"string.h"
 using namespace std ;
+
 //constrecteur par défaut de la classe joueur
 player::player():name(""),color("") , score(0),numde1(0),numde2(0),numcase(0), anciennenumcase(0){}
-//pour calculer le score de joueur
-void player::calculescore(int i){
-    score+=i; 
-}
+
 //entrer le nom de joueur qui va participer au jeu
 void player::saisiename(){
     cout<<"donner le nom de joueur :"<<endl ;
     cin>>name;
 }
+
+//saisir la coleur de joueur qui va participer au jeu
+void player::saisiecolor(){
+    while (verificolor()==false){
+        cout<<"il faut choisir entre les coleurs qui sont à votre disposition"<<endl ;
+        cout<<"donner le coleur de joueur"<<endl; 
+        cin>>color;
+    }
+}
+
 //cette methode nous permet de forcé le saisie de coleur parmi les 6 coleurs
 bool player::verificolor(){
     string tab[6]={"jaune","bleu","rouge","vert","rose","orangé"};
@@ -32,21 +40,8 @@ bool player::verificolor(){
     }
     return(test);
 }
-//saisir la coleur de joueur qui va participer au jeu
-void player::saisiecolor(){
-    while (verificolor()==false){
-        cout<<"il faut choisir entre les coleurs qui sont à votre disposition"<<endl ;
-        cout<<"donner le coleur de joueur"<<endl; 
-        cin>>color;
-    }
-}
-// retourner le coleur de joueur 
-string player::getcolor(){
-    return(color);
-}  
-int player::getanciennenumcase(){
-    return(anciennenumcase);
-} 
+
+ //donner un valeur aléatoire entre 1 et 6 pour un dé
 void player::lancement_de(){
     anciennenumcase= numcase ;
     srand(time(NULL));
@@ -54,7 +49,8 @@ void player::lancement_de(){
     numde2= (rand()%6)+1;          //choisir un nombre entre 1 et 6 pour dé 1
     numcase =numcase  + numde1 + numde2 ;
 }
-//lancement de dé et avancement de joueur selon les regles de jeu 
+
+//les differents mouvement possibles des pion 
 void player::evenement(player p){
     int somme=0 ;
     int difference=0 ;
@@ -154,26 +150,12 @@ void player::evenement(player p){
             }
     }
 }
-//affichage de nom de joueur cette méthode utile pour la classe game pour affiche le gagnant
-void player::afficher(){
-    cout<<name<<endl ;
-    cout<<color<<endl ; 
-    cout<<score<<endl ;
+
+//pour calculer le score de joueur
+void player::calculescore(int i){
+    score+=i; 
 }
-//retourner le nom de joueur
-string player::getname(){
-    return(name);
-}
-//retourner le numero de case
-int player::getnumcase(){
-    return (numcase);
-}
-int  player::getnumde1(){
-    return(numde1);
-}
-int player::getnumde2(){
-    return(numde2);
-}
+
 //si votre score dépasse le 100 vous pouvez utiliser un jocker si vous etes en obstacle 
 bool player::jocker(){
     bool ok=false;
@@ -186,9 +168,14 @@ bool player::jocker(){
     }
     return(ok);
 }
-int player::getscore(){
-    return(score);
+
+//affichage de nom de joueur cette méthode utile pour la classe game pour affiche le gagnant
+void player::afficher(){
+    cout<<name<<endl ;
+    cout<<color<<endl ; 
+    cout<<score<<endl ;
 }
+
 void player ::operator = (const player & p) {
     score=p.score;
     name=p.name ;
@@ -198,3 +185,34 @@ void player ::operator = (const player & p) {
     numcase=p.numcase;
     anciennenumcase=p.anciennenumcase;
 }
+
+//retourner le nom de joueur
+string player::getname(){
+    return(name);
+}
+
+// retourner le coleur de joueur 
+string player::getcolor(){
+    return(color);
+} 
+
+int  player::getnumde1(){
+    return(numde1);
+}
+
+int player::getnumde2(){
+    return(numde2);
+}
+
+int player::getscore(){
+    return(score);
+}
+
+//retourner le numero de case
+int player::getnumcase(){
+    return (numcase);
+}
+
+int player::getanciennenumcase(){
+    return(anciennenumcase);
+} 

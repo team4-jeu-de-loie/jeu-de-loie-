@@ -2,12 +2,14 @@
 #include"game.h"
 #include"string.h"
 using namespace std ;
-//constrecteur de la classe game
+
+//construction de la classe game
 game::game(int n=6):max(n),nbplayers(0),compteur(0){
     players = new player[max];
     cout<<"concrtecteur de jeu de loie"<<endl ;
 }
-//il faut que le nombre de joueur soit entre 2 et 6 joueurs
+
+//donner le nombre des joueurs un entier entre 2 et 6
 void game::saisienbplayers(){
     int n=0 ;
     while ((n<2) || (n>6)){
@@ -17,19 +19,8 @@ void game::saisienbplayers(){
     }
     nbplayers=n;
 }
-int game::getnbplayers(){
-    return(nbplayers);
-}
-//c'est pour ajouter les joueurs au tableau players
-void game::addplayer(player &a){
-    if (compteur==nbplayers){
-        cout<<"le nombres des joueur maximale est atteint "<<endl ;
-    }
-    else {
-        players[compteur++]=a;
-        compteur=compteur+1 ;
-    }
-}
+
+//verifie si le nom existe déjà pour des joueurs existant déjà dans le tableau
 bool game::existname(player p){
     bool test = false;
     for (int i=0;i<compteur;i++){
@@ -39,6 +30,8 @@ bool game::existname(player p){
     }
     return(test);
 }
+
+//verifie si le nom existe déjà pour des joueurs existant déjà dans le tableau
 bool game::existcolor(player p){
     bool test=false ;
     for (int i=0;i<compteur;i++){
@@ -48,35 +41,24 @@ bool game::existcolor(player p){
     } 
     return(test);                                   
 }
-//commencer le jeu 
+
+//ajouter un joueur au tableau
+void game::addplayer(player &a){
+    if (compteur==nbplayers){
+        cout<<"le nombres des joueur maximale est atteint "<<endl ;
+    }
+    else {
+        players[compteur++]=a;
+        compteur=compteur+1 ;
+    }
+}
+
+//commencer le jeu
 void game::startgame(){
         cout<<"le jeu commence"<<endl ;
 }
-//methode pour afficher le nom de gagnant 
-bool game::sucess(){
-    bool test=false;
-    int i=0;
-    while ((players[i].getnumcase()!=63)&&(i<nbplayers+1)){
-        i++;
-    }
-    if (i==nbplayers+1){
-        test=false ;
-    }
-    else {
-        test=true;
-        cout<<"le joueur "<<players[i].getname()<<"de couleur"<<players[i].getcolor()<<"est le gagnant avec un score"<<players[i].getscore()<<endl  ;
-    }
-    return(test);
-}
-void game::afficher_joueurs(){
-    cout<<"les joueurs qui vont participer à ce jeu sont"<<endl;
-    for (int i=0;i<nbplayers;i++){
-        players[i].afficher();
-    }
-}
-void game::gameover() {
-    cout<<"le jeu est terminée"<<endl ;
-}
+
+//commencer le jeu et arreter si on trouve un gagnant
 void game::tour(){
     int i=0;
     int tour=1 ;
@@ -99,7 +81,42 @@ void game::tour(){
         }
         tour++;
     }  
+} 
+//afficher le joueur gagnant
+bool game::sucess(){
+    bool test=false;
+    int i=0;
+    while ((players[i].getnumcase()!=63)&&(i<nbplayers+1)){
+        i++;
+    }
+    if (i==nbplayers+1){
+        test=false ;
+    }
+    else {
+        test=true;
+        cout<<"le joueur "<<players[i].getname()<<"de couleur"<<players[i].getcolor()<<"est le gagnant avec un score"<<players[i].getscore()<<endl  ;
+    }
+    return(test);
 }
+
+// fin du jeu
+void game::gameover() {
+    cout<<"le jeu est terminée"<<endl ;
+}
+
+//afficher le tableau des joueurs
+void game::afficher_joueurs(){
+    cout<<"les joueurs qui vont participer à ce jeu sont"<<endl;
+    for (int i=0;i<nbplayers;i++){
+        players[i].afficher();
+    }
+}
+
+//retourner le nombre des joueurs
+int game::getnbplayers(){
+    return(nbplayers);
+}
+//destruction de la classe  game 
 game::~game(){
     delete [] players ;
     cout<<"destruction de la classe game";          

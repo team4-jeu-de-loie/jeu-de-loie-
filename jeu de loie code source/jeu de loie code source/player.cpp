@@ -6,7 +6,7 @@
 using namespace std ;
 
 //constrecteur par défaut de la classe joueur
-player::player():name(""),color("") , score(0),numde1(0),numde2(0),numcase(0), anciennenumcase(0){}
+player::player():name(""),color("") , score(0),numcase(0), anciennenumcase(0){}
 
 //entrer le nom de joueur qui va participer au jeu
 void player::saisiename(){
@@ -18,7 +18,7 @@ void player::saisiename(){
 void player::saisiecolor(){
     cout<<"donner le coleur de joueur"<<endl;
     while (verificolor()==false){
-        cout<<"il faut choisir entre les coleurs qui sont à votre disposition"<<endl ; 
+        cout<<"il faut choisir entre les coleurs disponible:"<<"jaune,bleu,rouge,vert,rose,orangé"<<endl ; 
         cin>>color;
     }
 }
@@ -40,28 +40,28 @@ bool player::verificolor(){
     }
     return(test);
 }
-
- //donner un valeur aléatoire entre 1 et 6 pour un dé
-void player::lancement_de(){
-    anciennenumcase= numcase ;
-    srand(time(NULL));
-    numde1= (rand()%6)+1;          //choisir un nombre entre 1 et 6 pour dé 1
-    numde2= (rand()%6)+1;          //choisir un nombre entre 1 et 6 pour dé 1
-    numcase =numcase  + numde1 + numde2 ;
+void player::mouvement(){
+    dee.lancement_de();
+    int somme=0 ;
+    int de1=dee.getnumde1(), de2=dee.getnumde2();
+    somme=de1+de2 ;
+    anciennenumcase=numcase;
+    numcase=numcase+somme;
+    cout<<"le résultat donné par les deux dés est :"<<dee.getnumde1()<<"+"<<dee.getnumde2()<<endl;
 }
 
 //les differents mouvement possibles des pion 
 void player::evenement(player p){
     int somme=0 ;
     int difference=0 ;
-    somme=numde1+numde2 ;
+    somme=dee.getnumde1()+dee.getnumde2();
     if (anciennenumcase==19){
         cout<<"vous n'avez pas le droit de jouer"<<endl ;
     }
     if ((somme==6)){
         if (numcase>12){
-             calculescore(-10);
-             numcase=12;
+            calculescore(-10);
+            numcase=12;
         }
         else{
             calculescore(10);
@@ -73,35 +73,15 @@ void player::evenement(player p){
             if (somme==9){
                 cout<<"vous avez de la chance vous tomber sur un oie pour la première fois "<<endl;
                 calculescore(20);
-                if ((numde1==3 && numde2==6)|| (numde1==6 && numde2==3)){
+                if ((dee.getnumde1()==3 && dee.getnumde2()==6)|| (dee.getnumde1()==6 && dee.getnumde2()==3)){
                     numcase=26;
                 }
-                else if ((numde1==4 && numde2==5)||(numde1==5 && numde2==4)){
+                else if ((dee.getnumde1()==4 && dee.getnumde2()==5)||(dee.getnumde1()==5 && dee.getnumde2()==4)){
                     numcase=53;
                 }
             }
             break;
-        case 18 :
-            if (somme!=6){
-                numcase+=somme;
-                calculescore(10);
-            }
-            break ;
-        case 27 :
-            if (somme!=6){
-                numcase+=somme;
-                calculescore(10);
-            }
-            break;
-        
-        case 45 :
-            if (somme!=6){
-                numcase+=somme;
-                calculescore(10);
-            }
-            break ;
-        
-        case 54 :
+        case (18,27,45,54):
             if (somme!=6){
                 numcase+=somme;
                 calculescore(10);
@@ -136,9 +116,6 @@ void player::evenement(player p){
                 numcase=0;
             }
             break;
-        case 63:{
-            cout<<"félicitation vous avez gagné le jeu ";
-        }
         default:
             if (numcase==p.numcase){
                 numcase=p.anciennenumcase;
@@ -146,6 +123,9 @@ void player::evenement(player p){
             else if(numcase>63){
                  difference=numcase-63 ;
                  numcase=63-difference ;
+            }
+            else{
+                numcase=numcase;
             }
     }
 }
@@ -179,8 +159,6 @@ void player ::operator = (const player & p) {
     score=p.score;
     name=p.name ;
     color=p.color ;
-    numde1=p.numde1 ;
-    numde2=p.numde2 ;
     numcase=p.numcase;
     anciennenumcase=p.anciennenumcase;
 }
@@ -194,15 +172,6 @@ string player::getname(){
 string player::getcolor(){
     return(color);
 } 
-
-int  player::getnumde1(){
-    return(numde1);
-}
-
-int player::getnumde2(){
-    return(numde2);
-}
-
 int player::getscore(){
     return(score);
 }

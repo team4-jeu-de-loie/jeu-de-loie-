@@ -17,6 +17,9 @@ void surface::plateau(){
         cin>>hs;
     }
 }
+void surface::affiche(){
+    cout<<"le plateau choisit est"<<ls<<"*"<<hs;
+}
 //destruction de la classe surface 
 surface::~surface(){
     cout<<"la destruction de la classe surface"<<endl ;

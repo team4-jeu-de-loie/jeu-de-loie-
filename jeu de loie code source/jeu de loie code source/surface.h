@@ -10,6 +10,7 @@ class surface
     public: 
     surface();   //constructeur par défaut de la classe surface 
     void plateau() ;    //saisir la longeur et le hauteur du plateau
+    void affiche();
     ~surface();     //destrecteur surface
 };
 #endif

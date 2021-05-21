@@ -1,0 +1,44 @@
+
+@import url(https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap);
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Allerta Stencil', sans-serif;
+    user-select: none;
+}
+.container{
+    background-color:black;
+    width: 30%;
+    margin: auto;
+    text-align: center;
+}
+.imgde1{
+    width:50%;
+}
+.imgde2{
+    width: 50%;
+}
+.dé1{
+    text-align: center;
+    display: inline-block;
+}
+.dé2{
+    text-align: center;
+    display: inline-block;
+}
+h1{
+    color:yellow;
+}
+p{
+    font-size: 2rem; color:#00b894;text-shadow: 1px,1px,white;
+}
+button{
+    padding: 10px;background-color: whitesmoke ;color:#00b894;border: none;
+}
+body{
+    text-align: center;
+    min-height: 100vh;
+    background:url(https://www.gammvert.fr/conseils/sites/default/files/styles/main_image/public/2020-05/AdobeStock_304477729.jpg?itok=JcGUoFtk)
+    no-repeat 0% 0%/cover;
+}

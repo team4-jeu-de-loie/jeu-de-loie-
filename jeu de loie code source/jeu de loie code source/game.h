@@ -21,7 +21,6 @@ class game
     int getnbplayers();
     ~game();                     
     private:
-   
     const int max;          //max est une canstante=6        
     int nbplayers ;         //nombre des joueurs peut etre entre 1 et 6
     int compteur ;          

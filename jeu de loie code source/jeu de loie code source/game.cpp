@@ -58,18 +58,16 @@ void game::tour(){
     int i=0;
     int tour=1 ;
     while (sucess()==false){
-        cout<<"c est le tour numero :"<<tour<<endl ;
         if (i==nbplayers){
             tour++;
             i=0;
         }
-        cout<<"c'est le tour de "<<players[i].getname()<<"lancer le dé"<<endl ;
+        cout<<"c est le tour numero :"<<tour<<endl ;
+        cout<<"c'est le tour de:"<<" "<<players[i].getname()<<"lancer le dé"<<endl ;
         cin>>touche;
-        players[i].lancement_de();
-        int somme =players[i].getnumde1()+players[i].getnumde2();
-        cout<<"la somme de deux dé sont :"<<somme<<endl;
+        players[i].mouvement();
         int j=0;
-        while(j<nbplayers){
+        while(j<nbplayers){      //pour ver
             if (i==j){
                 j++;
             }
